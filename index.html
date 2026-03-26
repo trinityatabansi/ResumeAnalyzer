@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume Analyzer — GoalMine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=IM+Fell+English:ital@0;1&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="page-ornament top-ornament">❧</div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo">
+      <span class="logo-text">GoalMine</span>
+      <span class="logo-rule"></span>
+      <span class="logo-sub">Resume Analyzer</span>
+    </div>
+    <nav class="header-nav">
+      <span class="nav-item">I'm Applying</span>
+      <span class="nav-sep">·</span>
+      <span class="nav-item">I'm Hiring</span>
+    </nav>
+  </header>
+
+  <div class="header-rule"><span class="rule-ornament">◆</span></div>
+
+  <main class="container">
+
+    <!-- HERO -->
+    <section class="hero">
+      <p class="hero-kicker">What's Right for You?</p>
+      <h1>Find Your<br><em>Perfect Match</em></h1>
+      <p class="subtitle">Whether you're seeking a role or selecting a candidate — understand alignment with clarity and confidence.</p>
+    </section>
+
+    <div class="section-divider"><span>✦</span></div>
+
+    <!-- WHO IS THIS FOR -->
+    <section class="intro-section">
+      <p class="section-eyebrow">Who Is This For?</p>
+      <h2 class="section-title">Two Paths. One Tool.</h2>
+
+      <div class="who-grid">
+        <div class="who-card seeker-card">
+          <div class="who-header">
+            <span class="who-icon">🎯</span>
+            <div>
+              <h3 class="who-title">I'm Applying</h3>
+              <p class="who-tag">Seeking a role</p>
+            </div>
+          </div>
+          <ul class="who-list">
+            <li>Upload or paste your resume</li>
+            <li>Add the job description you're targeting</li>
+            <li>See your keyword match score instantly</li>
+            <li>Discover gaps and tailor before applying</li>
+          </ul>
+          <div class="who-tip">A score of 70 or above reflects strong alignment with the role's requirements.</div>
+        </div>
+
+        <div class="who-divider"><span>or</span></div>
+
+        <div class="who-card recruiter-card">
+          <div class="who-header">
+            <span class="who-icon">🔎</span>
+            <div>
+              <h3 class="who-title">I'm Hiring</h3>
+              <p class="who-tag">Evaluating a candidate</p>
+            </div>
+          </div>
+          <ul class="who-list">
+            <li>Upload or paste the candidate's resume</li>
+            <li>Add your job posting</li>
+            <li>Get an instant keyword alignment score</li>
+            <li>Make faster, more objective decisions</li>
+          </ul>
+          <div class="who-tip">Focus on the matched and missing skill columns to quickly assess candidate fit.</div>
+        </div>
+      </div>
+
+      <!-- SCORE GUIDE -->
+      <div class="score-legend">
+        <span class="legend-label">Score Guide</span>
+        <div class="legend-chips">
+          <span class="legend-chip poor">10–30 Matches &nbsp;·&nbsp; Poor Fit</span>
+          <span class="legend-chip fair">40–60 Matches &nbsp;·&nbsp; Reasonable Fit</span>
+          <span class="legend-chip good">70–100 Matches &nbsp;·&nbsp; Strong Fit</span>
+        </div>
+        <p class="legend-note">Score is based on positive keyword matches only. Filler words do not affect your result.</p>
+      </div>
+    </section>
+
+    <div class="section-divider"><span>✦</span></div>
+
+    <!-- STEP 1 -->
+    <section class="step-section">
+      <div class="step-label-row">
+        <span class="step-eyebrow">Step One</span>
+        <h2 class="step-title">Resume or Candidate Profile</h2>
+        <p class="step-desc">Upload a <strong>.txt</strong> or <strong>.pdf</strong> file, or paste the text below. Applying? Use your resume. Hiring? Use the candidate's.</p>
+      </div>
+      <div class="input-card" id="resumeCard">
+        <div class="card-header">
+          <span class="card-label">Resume Text</span>
+          <label class="upload-btn" for="resumeFile">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            Upload .txt / .pdf
+          </label>
+          <input type="file" id="resumeFile" accept=".txt,.pdf" hidden>
+        </div>
+        <div class="file-status" id="resumeFileStatus"></div>
+        <textarea id="resume" placeholder="Paste resume text here…" spellcheck="false"></textarea>
+        <div class="char-count" id="resumeCount">0 words</div>
+      </div>
+    </section>
+
+    <!-- STEP 2 -->
+    <section class="step-section">
+      <div class="step-label-row">
+        <span class="step-eyebrow">Step Two</span>
+        <h2 class="step-title">Job Description</h2>
+        <p class="step-desc">Paste the full job posting. The more complete it is, the more precise the analysis will be.</p>
+      </div>
+      <div class="input-card" id="jobCard">
+        <div class="card-header">
+          <span class="card-label">Job Posting Text</span>
+          <label class="upload-btn" for="jobFile">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            Upload .txt / .pdf
+          </label>
+          <input type="file" id="jobFile" accept=".txt,.pdf" hidden>
+        </div>
+        <div class="file-status" id="jobFileStatus"></div>
+        <textarea id="job" placeholder="Paste job description here…" spellcheck="false"></textarea>
+        <div class="char-count" id="jobCount">0 words</div>
+      </div>
+    </section>
+
+    <!-- ANALYZE -->
+    <div class="analyze-row">
+      <button id="analyzeBtn">
+        <span class="btn-text">Analyze Match</span>
+        <span class="btn-arrow">→</span>
+      </button>
+      <p class="hint">Results appear instantly below</p>
+    </div>
+
+    <!-- RESULTS -->
+    <div id="results" class="results-section hidden">
+
+      <div class="results-header">
+        <h2 class="section-title">Analysis Results</h2>
+        <button class="reset-btn" id="resetBtn">↩ Start Over</button>
+      </div>
+
+      <!-- ── SCORE CARD ── -->
+      <div class="score-block">
+        <div class="score-ring-wrap">
+          <svg class="score-ring" viewBox="0 0 120 120">
+            <circle class="ring-bg" cx="60" cy="60" r="52"/>
+            <circle class="ring-fill" id="ringFill" cx="60" cy="60" r="52"/>
+          </svg>
+          <div class="score-center">
+            <span class="score-number" id="scoreNumber">0</span>
+            <span class="score-pct">%</span>
+          </div>
+        </div>
+        <div class="score-info">
+          <p class="score-tier" id="scoreTier">—</p>
+          <div class="score-label" id="scoreLabel">—</div>
+          <p class="score-encourage" id="scoreEncourage"></p>
+          <p class="context-note" id="contextNote"></p>
+        </div>
+      </div>
+
+      <!-- ── OVERALL BAR ── -->
+      <div class="progress-section">
+        <div class="progress-header">
+          <span class="progress-title">Overall Match Strength</span>
+          <span class="progress-value" id="progressValue">0%</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill poor-fill" style="width:39%"></div>
+          <div class="progress-fill fair-fill" style="width:30%"></div>
+          <div class="progress-fill good-fill" style="width:31%"></div>
+          <div class="progress-needle" id="progressNeedle"></div>
+        </div>
+        <div class="progress-zones">
+          <span class="zone poor-zone">Developing · 0–39%</span>
+          <span class="zone fair-zone">Good · 40–69%</span>
+          <span class="zone good-zone">Strong · 70–100%</span>
+        </div>
+        <div class="progress-bar-track">
+          <div class="progress-bar-fill" id="progressBar"></div>
+        </div>
+      </div>
+
+      <!-- ── CATEGORY BREAKDOWN ── -->
+      <div class="category-section">
+        <p class="section-eyebrow">Score Breakdown</p>
+        <h3 class="category-title">How Each Area Scored</h3>
+        <div class="category-grid">
+          <div class="cat-row">
+            <div class="cat-info">
+              <span class="cat-label">Core Skills</span>
+              <span class="cat-weight">40% weight</span>
+            </div>
+            <div class="cat-bar-track"><div class="cat-bar" id="coreBar"></div></div>
+            <span class="cat-pct" id="coreLabel">—</span>
+          </div>
+          <div class="cat-row">
+            <div class="cat-info">
+              <span class="cat-label">Experience & Projects</span>
+              <span class="cat-weight">25% weight</span>
+            </div>
+            <div class="cat-bar-track"><div class="cat-bar" id="expBar"></div></div>
+            <span class="cat-pct" id="expLabel">—</span>
+          </div>
+          <div class="cat-row">
+            <div class="cat-info">
+              <span class="cat-label">Education Fit</span>
+              <span class="cat-weight">20% weight</span>
+            </div>
+            <div class="cat-bar-track"><div class="cat-bar" id="eduBar"></div></div>
+            <span class="cat-pct" id="eduLabel">—</span>
+          </div>
+          <div class="cat-row">
+            <div class="cat-info">
+              <span class="cat-label">Professional Skills</span>
+              <span class="cat-weight">15% weight</span>
+            </div>
+            <div class="cat-bar-track"><div class="cat-bar" id="softBar"></div></div>
+            <span class="cat-pct" id="softLabel">—</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── STRENGTHS / GAPS ── -->
+      <div class="tags-grid two-col">
+        <div class="tag-section">
+          <div class="tag-header">
+            <span class="tag-dot matched-dot"></span>
+            <span>✦ Strengths</span>
+          </div>
+          <p class="tag-hint">Skills and qualifications that align well with this role.</p>
+          <div class="tag-list" id="strengthsList"></div>
+        </div>
+        <div class="tag-section">
+          <div class="tag-header">
+            <span class="tag-dot missing-dot"></span>
+            <span>✦ Gaps</span>
+          </div>
+          <p class="tag-hint">Key terms from the job description not found in the resume.</p>
+          <div class="tag-list" id="gapsList"></div>
+        </div>
+      </div>
+
+      <!-- ── BONUS SKILLS ── -->
+      <div class="tag-section bonus-section">
+        <div class="tag-header">
+          <span class="tag-dot bonus-dot"></span>
+          <span>Bonus Skills Detected</span>
+        </div>
+        <p class="tag-hint">These are preferred but not required — having them is a plus, missing them does not affect your score.</p>
+        <div class="tag-list" id="bonusList"></div>
+      </div>
+
+      <!-- ── IMPROVEMENT SUGGESTIONS ── -->
+      <div class="suggestions-section">
+        <p class="section-eyebrow">Actionable Feedback</p>
+        <h3 class="category-title">Improvement Suggestions</h3>
+        <ul class="suggestions-list" id="suggestionsList"></ul>
+      </div>
+
+      <!-- ── FEEDBACK TIP ── -->
+      <div class="feedback-tip" id="feedbackTip"></div>
+
+      <!-- ── KEYWORD SEARCH ── -->
+      <div class="keyword-search-wrap">
+        <div class="kw-search-label">Search Any Skill</div>
+        <div class="keyword-search-row">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="keywordSearch" placeholder="Type a skill to check — e.g. leadership, Python, Agile…" autocomplete="off" spellcheck="false">
+          <button id="keywordFilterBtn" class="kw-filter-btn">Filter</button>
+          <button id="keywordClearBtn" class="kw-clear-btn hidden">✕ Clear</button>
+        </div>
+        <div class="keyword-search-result" id="keywordResult"></div>
+      </div>
+
+      <!-- ── FILLER ACCORDION ── -->
+      <div class="filler-accordion" id="fillerAccordion">
+        <button class="filler-toggle" id="fillerToggle">
+          <span>Show filtered words</span>
+          <span class="filler-count" id="noiseCount">0</span>
+          <span class="filler-chevron">▾</span>
+        </button>
+        <div class="filler-body hidden" id="fillerBody">
+          <p class="tag-hint">Words filtered as noise — they do not affect your score. If you believe a skill was incorrectly filtered, use the search bar above.</p>
+          <div class="tag-list" id="noiseList"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="section-divider"><span>✦</span></div>
+
+    <!-- GOOGLE SEARCH -->
+    <section class="search-section">
+      <p class="section-eyebrow">Need More Help?</p>
+      <h2 class="step-title">Search for Resources</h2>
+      <p class="step-desc">Research missing skills, find resume guides, or explore opportunities — powered by Google.</p>
+      <div class="search-box-wrap">
+        <form class="search-form" action="https://www.google.com/search" method="GET" target="_blank">
+          <div class="search-input-row">
+            <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" name="q" id="searchInput" placeholder="Search anything…" autocomplete="off" spellcheck="false">
+            <button type="submit" class="search-submit">Search →</button>
+          </div>
+        </form>
+        <div class="quick-searches">
+          <span class="quick-label">Quick searches:</span>
+          <button class="quick-chip" data-q="resume writing tips 2024">Resume tips</button>
+          <button class="quick-chip" data-q="how to learn SQL for beginners">Learn SQL</button>
+          <button class="quick-chip" data-q="how to improve communication skills professionally">Communication skills</button>
+          <button class="quick-chip" data-q="how to optimize resume for ATS">ATS tips</button>
+          <button class="quick-chip" data-q="best free resume templates 2024">Templates</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div class="footer-rule"><span class="rule-ornament">◆</span></div>
+
+  <footer>
+    <p class="footer-brand">GoalMine</p>
+    <p class="footer-sub">Turn goals into action.</p>
+  </footer>
+
+  <div class="page-ornament bottom-ornament">❧</div>
+
+  <script src="script.js"></script>
+</body>
+</html>
